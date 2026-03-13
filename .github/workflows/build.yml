@@ -41,13 +41,14 @@ jobs:
         # Create necessary directory structure
         mkdir -p $HOME/android-sdk/cmdline-tools/latest
 
-        # Download and unzip command-line tools
+        # Download and unzip command-line tools into the correct directory
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
-        unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/
+        unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/latest
         rm cmdline-tools.zip
         
-        # Move the tools to the correct directory
-        mv $HOME/android-sdk/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest
+        # Move the extracted files to the correct location
+        mv $HOME/android-sdk/cmdline-tools/latest/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
+        rmdir $HOME/android-sdk/cmdline-tools/latest/cmdline-tools # Remove the empty directory
 
         # Set up environment variables for Android SDK
         export ANDROID_HOME=$HOME/android-sdk
