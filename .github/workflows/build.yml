@@ -31,15 +31,14 @@ jobs:
           python3-kivy \
           zip \
           unzip \
-          python3-pyqt5 \
-          android-sdk
+          python3-pyqt5
 
         # Install Cython
         pip install cython
-    
+
     - name: Install Android Command Line Tools
       run: |
-        wget https://dl.google.com/android/repository/commandlinetools-linux-*-latest.zip -O cmdline-tools.zip
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
         unzip cmdline-tools.zip -d $HOME/android-sdk
         rm cmdline-tools.zip
         mkdir -p $HOME/android-sdk/cmdline-tools
