@@ -40,16 +40,16 @@ jobs:
 
     - name: Initialize buildozer.spec
       run: |
-        cd path/to/your/app # Change to your application directory
+        cd .
         buildozer init
 
     - name: Build APK
       run: |
-        cd path/to/your/app # Change to your application directory
+        cd .
         buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: kivy-apk
-        path: path/to/your/app/bin/*.apk # Change to your APK output path
+        path: bin/*.apk
