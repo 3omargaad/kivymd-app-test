@@ -1,5 +1,3 @@
-name: Build Kivy APK
-
 on:
   push:
     branches:
@@ -32,60 +30,47 @@ jobs:
           zip \
           unzip \
           python3-pyqt5
+
         # Install Cython
         pip install cython
-
-    - name: Install Required Android Build Tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y android-sdk build-essential
-        sdkmanager "build-tools;30.0.3"  # Update to the specific version you need
 
     - name: Install Android Command Line Tools
       run: |
         # Create necessary directory structure
         mkdir -p $HOME/android-sdk/cmdline-tools/latest
+
         # Download and unzip command-line tools into the correct directory
-        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
+        wget dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
         unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/latest
         rm cmdline-tools.zip
-<<<<<<< HEAD
         
         # Move the extracted files to the correct location
         mv $HOME/android-sdk/cmdline-tools/latest/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
         rmdir $HOME/android-sdk/cmdline-tools/latest/cmdline-tools # Remove the empty directory
-=======
 
->>>>>>> 44572d328ad90bb562be30c13ef2e1b9b396a444
         # Set up environment variables for Android SDK
         export ANDROID_HOME=$HOME/android-sdk
         export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-<<<<<<< HEAD
         
         # Accept licenses and install platform tools
-=======
-        
-        # Accept all licenses and install platform tools
->>>>>>> 44572d328ad90bb562be30c13ef2e1b9b396a444
         yes | sdkmanager --licenses
-<<<<<<< HEAD
         sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
-=======
-        yes | sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
->>>>>>> 44572d328ad90bb562be30c13ef2e1b9b396a444
     - name: Install Buildozer
       run: |
         pip install --upgrade pip
         pip install buildozer
+
     - name: Initialize buildozer.spec
       run: |
         cd . # Current directory
         buildozer init
+
     - name: Build APK
       run: |
         cd . # Current directory
         buildozer -v android debug
+
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
