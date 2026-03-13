@@ -33,6 +33,9 @@ jobs:
           unzip \
           python3-pyqt5
 
+        # Install Cython
+        pip install cython
+
     - name: Install Buildozer
       run: |
         pip install --upgrade pip
@@ -40,16 +43,16 @@ jobs:
 
     - name: Initialize buildozer.spec
       run: |
-        cd .
+        cd . # Current directory
         buildozer init
 
     - name: Build APK
       run: |
-        cd .
+        cd . # Current directory
         buildozer -v android debug
 
     - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v2
       with:
         name: kivy-apk
-        path: bin/*.apk
+        path: bin/*.apk # APK output path
