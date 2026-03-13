@@ -46,17 +46,15 @@ jobs:
         unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/latest
         rm cmdline-tools.zip
         
-        # Move the extracted files to the correct location
-        mv $HOME/android-sdk/cmdline-tools/latest/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
-        rmdir $HOME/android-sdk/cmdline-tools/latest/cmdline-tools # Remove the empty directory
-
         # Set up environment variables for Android SDK
         export ANDROID_HOME=$HOME/android-sdk
         export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-        
-        # Accept licenses and install platform tools
+
+        # Accept licenses
         yes | sdkmanager --licenses
-        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
+        # Install required SDK packages
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" # Stable build-tools version
 
     - name: Install Buildozer
       run: |
