@@ -38,13 +38,22 @@ jobs:
 
     - name: Install Android Command Line Tools
       run: |
+        # Create necessary directory structure
+        mkdir -p $HOME/android-sdk/cmdline-tools/latest
+
+        # Download and unzip command-line tools
         wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
-        unzip cmdline-tools.zip -d $HOME/android-sdk
+        unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools/
         rm cmdline-tools.zip
-        mkdir -p $HOME/android-sdk/cmdline-tools
+        
+        # Move the tools to the correct directory
         mv $HOME/android-sdk/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest
+
+        # Set up environment variables for Android SDK
         export ANDROID_HOME=$HOME/android-sdk
         export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+        
+        # Accept licenses and install platform tools
         yes | sdkmanager --licenses
         sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
